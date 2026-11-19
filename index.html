@@ -1049,11 +1049,11 @@ const CALCS=[
    const dose=lo===hi?fmt(lo,1):`${fmt(lo,1)}–${fmt(hi,1)}`;
    let vol=''; if(ok(mg)&&mg>0){ if(isTab){vol=lo===hi?`${fmt(lo/mg,2)} tablet`:`${fmt(lo/mg,2)}–${fmt(hi/mg,2)} tablet`} else {const c=mg/per; vol=lo===hi?`${fmt(lo/c,1)} mL`:`${fmt(lo/c,1)}–${fmt(hi/c,1)} mL`} }
    const dayLimit = p.dayFn? p.dayFn(v.w) : p.dayKg? Math.min(p.dayKg*v.w, p.dayMax||Infinity) : p.dayMax;
-   const per=p.perFn?p.perFn(v.w):p.per;
-   const rows=[['Mg/kg per dose',p.kgText?p.kgText(v.w):p.mg[0]===p.mg[1]?`${p.mg[0]} mg/kg`:`${p.mg[0]}–${p.mg[1]} mg/kg`],['Frequency',p.freq],['Max per dose',p.max?`${fmt(p.max,0)} mg`:'—'],['Max per day',ok(dayLimit)?`${fmt(dayLimit,0)} mg`:'—'],['Daily total at top dose',`${fmt(hi*per,0)} mg`]];
+   const nd=p.perFn?p.perFn(v.w):p.per;
+   const rows=[['Mg/kg per dose',p.kgText?p.kgText(v.w):p.mg[0]===p.mg[1]?`${p.mg[0]} mg/kg`:`${p.mg[0]}–${p.mg[1]} mg/kg`],['Frequency',p.freq],['Max per dose',p.max?`${fmt(p.max,0)} mg`:'—'],['Max per day',ok(dayLimit)?`${fmt(dayLimit,0)} mg`:'—'],['Daily total at top dose',`${fmt(hi*nd,0)} mg`]];
    const r={main:{label:p.n+' · each dose',value:dose,unit:'mg',sub:vol?`= ${vol} of ${p.forms.find(x=>x[0]===v.f)?.[1]||''}`:''},rows,notes:[p.use,p.note,'<span class="src"><b>Source:</b> '+p.src+'</span>']};
    if(capped) r.flag={level:'warn',text:`Capped at the maximum single dose of ${p.max} mg (the weight-based dose was higher).`};
-   if(ok(dayLimit)&&hi*per>dayLimit+0.5) r.flag={level:'warn',text:`At the top dose, ${per} doses a day (${fmt(hi*per,0)} mg) exceed the daily maximum of ${fmt(dayLimit,0)} mg. Use the lower dose or fewer doses.`};
+   if(ok(dayLimit)&&hi*nd>dayLimit+0.5) r.flag={level:'warn',text:`At the top dose, ${nd} doses a day (${fmt(hi*nd,0)} mg) exceed the daily maximum of ${fmt(dayLimit,0)} mg. Use the lower dose or fewer doses.`};
    if(isTab) r.notes.push('Tablet fractions below 0.5 are impractical: prefer a liquid.');
    if(p.flagFn){const f=p.flagFn(v.w); if(f) r.flag=f;}
    return r;}},
