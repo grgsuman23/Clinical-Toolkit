@@ -1,5 +1,5 @@
 // Offline support: app shell is cached; it refreshes in the background when online.
-const VERSION = 'clinic-kit-v1';
+const VERSION = 'clinic-kit-v2';
 const SHELL = ['./', './index.html', './manifest.webmanifest', './icons/icon-192.png', './icons/icon-512.png', './icons/maskable-512.png', './icons/apple-touch-icon.png'];
 
 self.addEventListener('install', (e) => {
